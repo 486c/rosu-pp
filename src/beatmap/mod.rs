@@ -5,6 +5,7 @@ use crate::parse::HitObject;
 pub use self::{
     attributes::{BeatmapAttributes, BeatmapAttributesBuilder, BeatmapHitWindows},
     breaks::Break,
+    background::Background,
     control_points::{DifficultyPoint, EffectPoint, TimingPoint},
     ext::*,
     mode::GameMode,
@@ -13,6 +14,7 @@ pub use self::{
 
 mod attributes;
 mod breaks;
+mod background;
 mod control_points;
 mod converts;
 mod ext;
@@ -68,6 +70,9 @@ pub struct Beatmap {
 
     /// All break points of the beatmap.
     pub breaks: Vec<Break>,
+
+    /// Background of the beatmap
+    pub background: Background
 }
 
 impl Beatmap {
@@ -227,6 +232,7 @@ impl Beatmap {
             effect_points: self.effect_points.clone(),
             stack_leniency: self.stack_leniency,
             breaks: self.breaks.clone(),
+            background: self.background.clone(),
         }
     }
 }

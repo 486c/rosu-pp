@@ -109,7 +109,8 @@ fn assert_osu(map: &Beatmap) {
     assert_eq!(map.difficulty_points.len(), 50);
     assert_eq!(map.effect_points.len(), 131);
     assert!((map.stack_leniency - 0.5).abs() <= f32::EPSILON);
-    assert_eq!(map.breaks.len(), 1)
+    assert_eq!(map.breaks.len(), 1);
+    assert_eq!(map.background.filename, "87195968_p0.jpg")
 }
 
 fn assert_taiko(map: &Beatmap) {
@@ -130,7 +131,8 @@ fn assert_taiko(map: &Beatmap) {
     assert_eq!(map.difficulty_points.len(), 3);
     assert_eq!(map.effect_points.len(), 8);
     assert!((map.stack_leniency - 0.7).abs() <= f32::EPSILON);
-    assert_eq!(map.breaks.len(), 0)
+    assert_eq!(map.breaks.len(), 0);
+    assert_eq!(map.background.filename, "berserk_armor_bg.jpg")
 }
 
 fn assert_catch(map: &Beatmap) {
@@ -151,7 +153,8 @@ fn assert_catch(map: &Beatmap) {
     assert_eq!(map.difficulty_points.len(), 0);
     assert_eq!(map.effect_points.len(), 57);
     assert!((map.stack_leniency - 0.7).abs() <= f32::EPSILON);
-    assert_eq!(map.breaks.len(), 0)
+    assert_eq!(map.breaks.len(), 0);
+    assert_eq!(map.background.filename, "background.jpg")
 }
 
 fn assert_mania(map: &Beatmap) {
@@ -172,5 +175,6 @@ fn assert_mania(map: &Beatmap) {
     assert_eq!(map.difficulty_points.len(), 0);
     assert_eq!(map.effect_points.len(), 1);
     assert!((map.stack_leniency - 0.7).abs() <= f32::EPSILON);
-    assert_eq!(map.breaks.len(), 0)
+    assert_eq!(map.breaks.len(), 0);
+    assert_eq!(map.background.filename, "Konachan.com_-_198887_animal_barefoot_blonde_hair_bloodborne_doll_fish_flowers_goth-loli_hat_headdre (2).jpg")
 }

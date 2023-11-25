@@ -29,7 +29,7 @@ use std::path::Path;
 use async_std::{fs::File, io::Read as AsyncRead, path::Path};
 
 use crate::{
-    beatmap::{Beatmap, Break, DifficultyPoint, EffectPoint, GameMode, SortedVec, TimingPoint},
+    beatmap::{Beatmap, Break, Background, DifficultyPoint, EffectPoint, GameMode, SortedVec, TimingPoint},
     util::TandemSorter,
 };
 
@@ -233,8 +233,10 @@ macro_rules! parse_events_body {
 
             let mut split = line.split(',');
 
+            let event_type = split.next().and_then(|value| value.bytes().next());
+
             // We're only interested in breaks
-            if let Some(b'2') = split.next().and_then(|value| value.bytes().next()) {
+            if let Some(b'2') = event_type {
                 let start_time = split.next().and_then(f64::parse_in_range);
                 let end_time = split.next().and_then(f64::parse_in_range);
 
@@ -244,6 +246,36 @@ macro_rules! parse_events_body {
                         end_time,
                     });
                 }
+            }
+
+            if let Some(b'0') = event_type {
+                let start_time = split.next().and_then(f64::parse_in_range);
+                let mut filename = split.next().and_then(|x| Some(x.to_owned()));
+                let x_offset = split.next().and_then(i32::parse_in_range);
+                let y_offset = split.next().and_then(i32::parse_in_range);
+
+
+                if let Some(ref mut filename) = filename {
+                    filename.retain(|x| x != '"');
+                }
+
+                let parse_result = (start_time, filename, x_offset, y_offset);
+
+                if let (
+                    Some(start_time), 
+                    Some(filename), 
+                    Some(x_offset), 
+                    Some(y_offset)) = parse_result 
+                {
+                    $self.background = Background {
+                        start_time,
+                        filename,
+                        x_offset,
+                        y_offset
+                    }
+
+                }
+
             }
         }
 
