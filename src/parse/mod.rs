@@ -251,8 +251,10 @@ macro_rules! parse_events_body {
             if let Some(b'0') = event_type {
                 let start_time = split.next().and_then(f64::parse_in_range);
                 let mut filename = split.next().and_then(|x| Some(x.to_owned()));
-                let x_offset = split.next().and_then(i32::parse_in_range);
-                let y_offset = split.next().and_then(i32::parse_in_range);
+                let x_offset = split.next().and_then(i32::parse_in_range)
+                    .or(Some(0));
+                let y_offset = split.next().and_then(i32::parse_in_range)
+                    .or(Some(0));
 
 
                 if let Some(ref mut filename) = filename {
